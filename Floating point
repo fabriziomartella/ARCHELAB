@@ -1,0 +1,71 @@
+FLOATING POINT
+
+Per chi ha difficoltà con gli esercizi dei floating point archelab.
+
+
+Come calcolare floating point avendo: bit di segno, bits di esponente e bit di mantissa
+
+Step1: Determinare il segno
+Step2: Convertire in binario puro lo stesso numero, eventualmente anche la parte frazionaria
+Step3: Normalizzare secondo lo standard IEEE 754 --> dobbiamo far si che il numero abbia alla sinistra del punto un solo 1,
+       e tener conto di quanti numeri spostiamo per arrivare a quel risultato e se il numero lo staimo ingrandendo o rimpicciolendo 
+       esempio -----> 111.01 -> 1.1101 x 2^2 (elevato le posizioni spostate) mentre se fosse 0.00011 ---> 1.1 x 2^-4
+Step4: Determinare biased espontente, 
+       fare esponente(che abbiamo calcolato sopra) + 2^(elevato al numero di bit che abbiamo a disposizione per l' esponente - 1)-1 
+       ovvero 2^(num-1) - 1sul tot
+Step5: rimuovo il primo 1 che ha la mantissa e scrivo il numero nel risultato, se mancano numeri aggiungo 0 riempiendo.
+
+
+
+
+Esempio = 
+Come verrebbe rappresentato il numero decimale 7.5 nell’inesistente codifica IEEE 754 in precisione 
+insoddisfacente che utilizza 1 bit per il segno, 3 bit per l’esponente e 3 bit per la mantissa?
+
+Step1: Il numero è positivo quindi segno = 0;(Primo valore trovato)
+Step2: Converto in binario puro sia il numero intero(7), sia la parte di frazione(0.5)
+(Attenzione a ricopiare il numero, la parte intera si scrive dal basso verso l'alto, la parte di frazione dall'alto verso il basso)
+7/2 = 1
+3/2 = 1 -----> Parte Intera = 111    
+1/1 = 1 
+ora calcolo frazione
+0.5 x 2 = 1.0(trovato 1 mi stoppo) -----> Parte Frazionaria = 1
+Binario puro = 111.1
+Step3: Normalizzo --> 111.1 diventa 1.111 x 2^2<-------esponente da sommare sotto                                                                                   
+Step4: Determino esponente, ho 3 bit per l' esponente quindi faccio 2^(3-1)-1 = 3 e ci sommo l' esponente che è 2, 3+2 = 5 in binario --> 101(Secondo valore trovato)
+Step5: infine prendo il numero normalizzato sopra e gli tolgo il primo bit 1.111 diventa 111(Terzo valore trovato)
+Quindi il risultato che otteniamo è:
+
+1 bit segno = 0
+3 bit esponente = 101
+3 bit mantissa = 111
+quindi: 0101111
+
+
+Se la consegna che otteniamo invece è questa: 
+
+Quale numero è rappresentato dalla seguente sequenza di bit ottenuta dall’inesistente codifica IEEE 754 in precisione insoddisfacente
+che utilizza 1 bit per il segno, 3 bit per l’esponente e 3 bit per la mantissa? 1101011
+Nota: esprimere il risultato usando il punto . come separatore tra la parte intera e quella frazionaria. Non inserire alcun carattere di spaziatura.
+
+Faccio il contrario: 
+Valore: 1101011
+1 bit di segno = 1 ---> Il risultato avrà segno -
+3 bit esponente = 101
+3 bit mantissa = 011
+Step5: Prendo il valore mantissa e aggiungo 1. --> 1.011
+Step4: Reverse esponente, faccio 2^(numero di bit esponente quindi 3-1)-1 ovvero otteniamo 3,
+       esponente = 101 (ovvero 5) quindi faccio 5-3 = 2;
+       1.011 x 2^2 ----> 101.1 = -5.5
+*/
+       5/2 = 1
+       2/2 = (resto)0
+       1/1 = 1
+
+       Parte frazionata ----> 0.5
+
+/*
+ Risulatto -5.5
+
+
+
